@@ -1,0 +1,223 @@
+-- create DB
+create database node36;
+
+use node36;
+
+-- create tables
+create TABLE orders(
+user_id INTEGER,
+FOREIGN KEY (user_id) REFERENCES users(user_id),
+food_id INTEGER,
+FOREIGN KEY (food_id) REFERENCES foods(food_id),
+amount INTEGER,
+code VARCHAR(35),
+arr_sub_id VARCHAR(225)
+)
+
+create TABLE users(
+user_id INTEGER PRIMARY KEY NOT NULL auto_increment,
+full_name VARCHAR(35),
+email VARCHAR(30),
+password VARCHAR(20)
+)
+
+create TABLE foods (
+food_id INTEGER PRIMARY KEY auto_Increment,
+food_name VARCHAR(50),
+image VARCHAR(225),
+price FLOAT,
+description VARCHAR(225),
+type_id INTEGER
+)
+
+create TABLE sub_food (
+sub_id INTEGER PRIMARY Key NOT NULL AUTO_INCREMENT,
+sub_name VARCHAR(50),
+sub_price FLOAT,
+food_id INTEGER,
+FOREIGN KEY (food_id) REFERENCES foods(food_id)
+);
+
+create Table restaurant (
+res_id INTEGER PRIMARY KEY NOT NULL auto_increment,
+res_name VARCHAR(50),
+image VARCHAR(225),
+description VARCHAR(225)
+)
+
+create TABLE food_type(
+type_id INTEGER PRIMARY KEY NOT NULL auto_increment,
+type_name VARCHAR(50)
+)
+
+
+ALTER TABLE foods
+add FOREIGN key (type_id) REFERENCES food_type(type_id)
+
+create TABLE rate_res(
+user_id INTEGER,
+FOREIGN KEY (user_id) REFERENCES users(user_id),
+res_id INTEGER,
+FOREIGN KEY (res_id) REFERENCES restaurant(res_id),
+amount INTEGER,
+date_rate date
+)
+
+create TABLE like_res(
+user_id INTEGER,
+FOREIGN KEY (user_id) REFERENCES users(user_id),
+res_id INTEGER,
+FOREIGN KEY (res_id) REFERENCES restaurant(res_id),
+date_rate date
+)
+
+-- insert tables
+INSERT INTO food_type (type_id, type_name)
+VALUES
+    (1, 'drink'),
+    (2, 'fast food'),
+    (3, 'cake'),
+    (4, 'ice cream');
+
+
+
+INSERT INTO users (full_name, email, password) 
+VALUES
+    ('John Doe', 'johndoe@example.com', 'hashed_password_1'),
+    ('Jane Smith', 'janesmith@example.com', 'hashed_password_2'),
+    ('Bob Johnson', 'bjohnson@example.com', 'hashed_password_3'),
+    ('User4 Full Name', 'user4@example.com', 'hashed_password_4'),
+    ('User5 Full Name', 'user5@example.com', 'hashed_password_5'),
+    ('User6 Full Name', 'user6@example.com', 'hashed_password_6'),
+    ('User7 Full Name', 'user7@example.com', 'hashed_password_7'),
+    ('User8 Full Name', 'user8@example.com', 'hashed_password_8'),
+    ('User9 Full Name', 'user9@example.com', 'hashed_password_9'),
+    ('User10 Full Name', 'user10@example.com', 'hashed_password_10'),
+    ('User11 Full Name', 'user11@example.com', 'hashed_password_11'),
+    ('User12 Full Name', 'user12@example.com', 'hashed_password_12'),
+    ('User13 Full Name', 'user13@example.com', 'hashed_password_13'),
+    ('User14 Full Name', 'user14@example.com', 'hashed_password_14'),
+    ('User15 Full Name', 'user15@example.com', 'hashed_password_15'),
+    ('User16 Full Name', 'user16@example.com', 'hashed_password_16'),
+    ('User17 Full Name', 'user17@example.com', 'hashed_password_17'),
+    ('User18 Full Name', 'user18@example.com', 'hashed_password_18'),
+    ('User19 Full Name', 'user19@example.com', 'hashed_password_19'),
+    ('User20 Full Name', 'user20@example.com', 'hashed_password_20');
+
+INSERT INTO foods (food_name, image, price, description, type_id)
+VALUES
+    ('Spaghetti Carbonara', 'spaghetti.jpg', 120000, 'Creamy pasta dish with bacon and eggs.', 2),
+    ('Chicken Alfredo', 'chicken_alfredo.jpg', 159000, 'Creamy chicken pasta with fettuccine.', 2),
+    ('Margherita Pizza', 'margherita_pizza.jpg', 99000, 'Classic tomato and mozzarella pizza.', 2),
+    ('Burger and Fries', 'burger.jpg', 35000, 'Juicy burger with a side of fries.', 2),
+    ('Caesar Salad', 'caesar_salad.jpg', 79000, 'Fresh Caesar salad with croutons.', 2),
+    ('Sushi Combo', 'sushi_combo.jpg', 199000, 'Assorted sushi rolls and sashimi.', 2),
+    ('Beef Tacos', 'beef_tacos.jpg', 109000, 'Delicious beef tacos with salsa.', 2),
+    ('Chocolate Cake', 'chocolate_cake.jpg', 59000, 'Rich and decadent chocolate cake.', 3),
+    ('Fruit Smoothie', 'fruit_smoothie.jpg', 49000, 'Refreshing mixed fruit smoothie.', 1),
+    ('Iced Coffee', 'iced_coffee.jpg', 35000, 'Chilled iced coffee with cream.', 4);
+
+INSERT INTO restaurant (res_name, image, description)
+VALUES
+    ('Restaurant A', 'restaurant_a.jpg', 'A cozy restaurant with a diverse menu.'),
+    ('Restaurant B', 'restaurant_b.jpg', 'A family-friendly place with a play area for kids.'),
+    ('Restaurant C', 'restaurant_c.jpg', 'A fine dining establishment with a romantic ambiance.');
+
+INSERT INTO sub_food (sub_name, sub_price, food_id)
+VALUES
+    ('saurce', 10000, 12),
+    ('ice', 2000, 20),
+    ('topping', 15000, 19)
+    
+
+INSERT INTO like_res (user_id, res_id, date_like)
+VALUES
+    (1, 1, '2023-10-13'),
+    (1, 2, '2023-10-14'),
+    (2, 3, '2023-10-14'),
+    (1, 3, '2023-10-15'),
+    (4, 2, '2023-10-16'),
+    (5, 3, '2023-10-16'),
+    (6, 1, '2023-10-17'),
+    (7, 2, '2023-10-17'),
+    (8, 3, '2023-10-18'),
+    (9, 1, '2023-10-18'),
+    (10, 2, '2023-10-19'),
+    (11, 3, '2023-10-19'),
+    (3, 2, '2023-11-06'),
+    (4, 3, '2023-11-06'),
+    (3, 1, '2023-11-07'),
+    (20, 3, '2023-11-08');
+
+INSERT INTO rate_res (user_id, res_id, amount,date_rate)
+VALUES
+    (1, 1, 3, '2023-10-13'),
+    (5, 2, 2,'2023-10-14'),
+    (4, 3,1, '2023-10-14'),
+    (1, 3,5, '2023-10-15'),
+    (4, 2,4, '2023-10-16'),
+    (3, 3,4, '2023-10-16'),
+    (6, 1,3, '2023-10-17'),
+    (7, 2,5, '2023-10-17'),
+    (7, 3, 5,'2023-10-18'),
+    (8, 1,5, '2023-10-18'),
+    (10, 2,4, '2023-10-19'),
+    (11, 3,3, '2023-10-19'),
+    (12, 2,3, '2023-11-06'),
+    (4, 3,5, '2023-11-06'),
+    (3, 1,3, '2023-11-07'),
+    (20, 3,1, '2023-11-08');
+
+INSERT INTO orders (user_id, food_id, amount, code)
+VALUES
+    (1, 11, 2, 'ABC123' ),
+    (11, 12, 1, 'DEF456' ),
+    (2, 13, 3, 'GHI789' ),
+    (2, 14, 1, 'JKL012' ),
+    (3, 15, 2, 'MNO345'),
+    (13, 16, 2, 'PQR678'),
+    (14, 11, 1, 'STU901' ),
+    (4, 13, 2, 'VWX234' ),
+    (5, 12, 2, 'YZA567'),
+    (5, 14, 1, 'BCD890' ),
+    (1, 15, 3, 'EFG123' ),
+    (2, 16, 1, 'HIJ456' ),
+    (3, 11, 2, 'KLM789' ),
+    (6, 12, 2, 'NOP012'),
+    (5, 13, 1, 'QRS345' ),
+    (1, 14, 3, 'TUV678' ),
+    (2, 15, 1, 'WXY901' ),
+    (3, 16, 2, 'ZAB234' ),
+    (4, 19, 2, 'CDE567'),
+    (15, 20, 1, 'FGH890');
+    
+-- Query
+
+--1. top 5 people who liked restaurant
+select u.full_name, count(ls.res_id) as res_num from users as u
+inner join like_res as ls on u.user_id=ls.user_id
+group by u.full_name
+order by res_num desc,
+limit 5
+
+--2. top 2 restaurants which users like the most
+select r.res_name, count(ls.user_id) as like_num from restaurant as r
+join like_res as ls on ls.res_id=r.res_id
+group by r.res_name
+order by like_num desc
+limit 2
+
+--3. The person who order foods the most
+select*from (select u.full_name, count(o.food_id) as num from users as u
+inner join orders as o on o.user_id=u.user_id
+group by u.full_name) as tb2
+where num >= (select max(tb1.SL) from (select user_id, count(food_id) as SL
+from orders
+group by user_id) as tb1)
+
+--4. User did not interact on the app yet.
+select u.full_name from users as u
+left join orders as o on o.user_id=u.user_id
+left join like_res as ls on ls.user_id = u.user_id
+left join rate_res as rs on rs.user_id = u.user_id
+where o.food_id is null and ls.date_like is null and rs.date_rate is null
